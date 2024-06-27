@@ -4,7 +4,7 @@ setup(
     name="pynav",
     version="0.1",
     packages=find_packages(),
-    install_requires=[],
+    install_requires=["tkinter"],
     author="Diego Chaves",
     author_email="diegochavesdds@gmail.com",
     description="Uma biblioteca personalizada para navegação de dados",
