@@ -1,0 +1,16 @@
+# Exclui pastas e arquivos específicos do PyCharm
+.idea/
+
+# Exclui metadados do setuptools
+*.egg-info/
+
+# Exclui outros arquivos e pastas comuns que não devem ser versionados
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.log
+*.coverage
+dist/
+build/
