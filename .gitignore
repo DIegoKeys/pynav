@@ -4,7 +4,7 @@
 # Exclui metadados do setuptools
 *.egg-info/
 
-# Exclui outros arquivos e pastas comuns que não devem ser versionados
+# Exclui outros arquivos e astas comuns que não devem ser versionados
 __pycache__/
 *.pyc
 *.pyo
