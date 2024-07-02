@@ -4,10 +4,11 @@ from typing import Union
 from .data_cursor import DataCursor
 
 class Navigator:
-    def __init__(self, tkWindow: tk.Tk):
+    def __init__(self, tkWindow: tk.Tk, treeview: ttk.Treeview, cursor: DataCursor):
+        self.dataSet = cursor
         self.records = []
         self.tkWindow = tkWindow
-        self._tree = None
+        self._tree = treeview
         self.create_nav()
 
     @property
@@ -25,14 +26,14 @@ class Navigator:
             entry = ttk.Entry(self.nav_frame)
             entry.pack(side="left")
 
-    def fill_table(self, cursor: DataCursor):
-        headers = cursor.get_headers()
+    def fill_table(self):
+        headers = self.dataSet.get_headers()
         self._tree["columns"] = headers
         self._tree.column("#0", width=0, stretch=tk.NO)
         for item in headers:
             self._tree.heading(item, text=item, anchor=tk.W)
 
-        self.records = cursor.data
+        self.records = self.dataSet.data
         self.of_label.config(text="de " + str(len(self.records)))
         tree_id = 0
         for record in self.records:
@@ -45,7 +46,7 @@ class Navigator:
         self.page_entry.insert(0, str(int(self._tree.selection()[0]) + 1))
 
     def create_nav(self):
-        self.nav_frame = ttk.Frame(self.tkWindow)
+        self.nav_frame = ttk.Frame(self.tkWindow, width=self._tree.winfo_width())
         self.nav_frame.pack(side="top", fill="x")
 
         self.first_btn = ttk.Button(self.nav_frame, text="|<", command=self.first_record)
@@ -66,10 +67,6 @@ class Navigator:
 
         self.last_btn = ttk.Button(self.nav_frame, text=">|", command=self.last_record)
         self.last_btn.pack(side="left")
-
-        self.table_frame = ttk.Frame(self.tkWindow)
-        self.table_frame.pack(fill="both", expand=True)
-        self._tree = ttk.Treeview(self.table_frame)
 
         self._tree.bind("<ButtonRelease-1>", self.__on_treeview_click)
 
